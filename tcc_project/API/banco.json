@@ -1,0 +1,51 @@
+{
+  "empresas": [
+    {
+      "id": 3,
+      "cnpj": "11",
+      "nome": "Empresa da Tai",
+      "nomeFantasia": "realmente é a empresa da Tai",
+      "endereco": "1",
+      "telefone": "1"
+    },
+    {
+      "id": 4,
+      "nome": "Empresa da Vizinha",
+      "nomeFantasia": "Empresa da  Vizinha"
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": 2,
+      "nome": "Funcionário do setor da empresa da Tai",
+      "sobrenome": "Voigt",
+      "dataNasc": "1",
+      "cpf": "1",
+      "rg": "1",
+      "endereco": "1",
+      "pis": "1",
+      "cargaHoraria": "1",
+      "salario": "1",
+      "dataAdmissao": "1",
+      "dataDesligamento": "1",
+      "setor": {
+        "nome": "Setor da empresa da Tai",
+        "empresa": {
+          "id": 3,
+          "nome": "Empresa da Tai"
+        },
+        "id": 2
+      }
+    }
+  ],
+  "setores": [
+    {
+      "nome": "Setor da empresa da Tai",
+      "empresa": {
+        "id": 3,
+        "nome": "Empresa da Tai"
+      },
+      "id": 2
+    }
+  ]
+}
