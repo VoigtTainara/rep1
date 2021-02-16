@@ -31,7 +31,21 @@ namespace tcc_project_API.Controllers
             }
         }
 
-        [HttpGet("/ByEmpresa/{EmpresaId}")]
+        [HttpGet("{SetorId}")]
+        public async Task<IActionResult> getBySetorId(int SetorId)
+        {
+            try
+            {
+                var result = await _repo.GetSetorAsyncById(SetorId, true);
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de dados falhou");
+            }
+        }
+
+        [HttpGet("ByEmpresa/{EmpresaId}")]
         public async Task<IActionResult> getByEmpresaId(int EmpresaId)
         {
             try
@@ -52,7 +66,7 @@ namespace tcc_project_API.Controllers
             {
                 _repo.Add(model);
                 if(await _repo.SaveChangesAsync()){
-                    return Created($"/api/funcionario/{model.id}", model);
+                    return Created($"/api/setor/{model.id}", model);
                 }              
             }
             catch (System.Exception)

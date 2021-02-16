@@ -72,6 +72,7 @@ namespace tcc_project_API.Data
             if (includeFuncionario){
               query = query.Include(f => f.funcionarios); 
             }
+            query = query.Include(f => f.empresa);
             query = query.OrderBy(f => f.id);
 
             return await query.ToArrayAsync();
@@ -83,6 +84,7 @@ namespace tcc_project_API.Data
             if (includeEmpresa){
               query = query.Include(f => f.empresa); 
             }
+            query = query.Include(f => f.funcionarios);
             query = query.AsNoTracking().OrderBy(f => f.id).Where(setor => setor.empresaId == EmpresaId);
 
             return await query.ToArrayAsync();

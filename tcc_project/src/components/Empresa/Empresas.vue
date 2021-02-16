@@ -72,6 +72,7 @@ export default {
         this.$http.post('http://localhost:5000/api/empresa', _empresa)
         .then(res => res.json())
         .then(empresaRetornada => {
+          empresaRetornada.qtdSetores = !empresaRetornada.setores ? 0 : empresaRetornada.setores.length;
           this.empresas.push(empresaRetornada);
           this.nome= '';
         })
@@ -82,11 +83,8 @@ export default {
     pegarQtdSetoresPorEmpresa(){
       this.empresas.forEach((empresa,index)=>{
         empresa = {
-          id: empresa.id,
-          nome: empresa.nome,
-          qtdSetores: this.setores.filter(setor =>
-           setor.empresa.id == empresa.id
-          ).length
+          ...empresa,
+          qtdSetores: empresa.setores.length
         }
         this.empresas[index] = empresa
       });
@@ -101,10 +99,12 @@ export default {
        });
     },
     remover(empresa){
+      console.dir(empresa);
           if (empresa.qtdSetores>0){
             this.$alert("Existem setores cadastrados na empresa! Realize a exclusão dos setores, antes de realizar "
             + "a exclusão da empresa.")
           }else if(empresa.qtdSetores<=0) {
+            console.dir('++');
             this.$http.delete(`http://localhost:5000/api/empresa/${empresa.id}`)
             let indice = this.empresas.indexOf(empresa);
             this.empresas.splice(indice, 1);

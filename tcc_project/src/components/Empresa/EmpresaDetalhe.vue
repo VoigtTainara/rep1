@@ -8,7 +8,7 @@
                 <tr>
                     <td class="colPequeno">Código</td>
                     <td>
-                        <label v-if="visualizar">{{empresa.id}}</label>
+                        <label>{{empresa.id}}</label>
                     </td>
                 </tr>
                 <tr>

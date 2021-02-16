@@ -30,7 +30,9 @@ namespace tcc_project_API
             services.AddDbContext<DataContext>(
                 x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>{
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddScoped<IRepository, Repository>();
             services.AddCors();
         }

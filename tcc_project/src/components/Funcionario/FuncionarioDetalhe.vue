@@ -8,7 +8,7 @@
                 <tr>
                     <td class="colPequeno">Código</td>
                     <td>
-                        <label v-if="visualizar">{{funcionario.id}}</label>
+                        <label>{{funcionario.id}}</label>
                     </td>
                 </tr>
                 <tr>
@@ -138,25 +138,26 @@ import Titulo from '../Titulo/Titulo'
             }
         },
         created(){
-        this.carregarSetor();    
-
+        //this.carregarSetor();    
+        this.carregarFuncionario();
         
         },
         methods: {
-            carregarSetor(){
+            carregarSetor(empresaId){
                 this.$http
-                    .get('http://localhost:5000/api/setor')
+                    .get(`http://localhost:5000/api/setor/ByEmpresa/${empresaId}`)
                     .then(res => res.json())
                     .then(setor => {
                         this.setores = setor
-                        this.carregarAluno();
+                        //this.carregarFuncionario();
                     });
             },
-            carregarAluno(){
+            carregarFuncionario(){
                 this.$http.get('http://localhost:5000/api/funcionario/' + this.id)
                     .then(res => res.json())
                     .then(funcionario => {
                         this.funcionario = funcionario;
+                        this.carregarSetor(funcionario.setor.empresaId);
                         this.loading = false;
                     });
 
@@ -186,7 +187,10 @@ import Titulo from '../Titulo/Titulo'
                     _funcionarioEditar)
                     .then(res => res.json())
                     .then(funcionario = this.funcionario = funcionario)
-                    .then(() => this.visualizar = true);
+                    .then(() => { 
+                        this.visualizar = true;
+                        this.carregarFuncionario();
+                    });
 
                 this.visualizar = !this.visualizar;
             },

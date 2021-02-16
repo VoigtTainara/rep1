@@ -19,7 +19,7 @@
           <td>{{setor.id}}</td> 
           <td>{{setor.nome}}</td>
           <td>{{setor.qtdFunc}}</td>
-          <td v-if="empresaid == undefined">{{setor.empresa}}</td>
+          <td v-if="empresaid == undefined">{{setor.empresa.nome}}</td>
           <td>
             <router-link 
             v-bind:to="'/funcionarios/' + setor.id" 
@@ -55,15 +55,18 @@ export default {
   created(){
     if(this.empresaid){
       this.carregarEmpresas();
-      this.$http.get('http://localhost:5000/api/setor/ByEmpresa/${this.empresaid}')
+      this.$http.get(`http://localhost:5000/api/setor/ByEmpresa/${this.empresaid}`)
         .then(res => res.json())
-        .then(setores => this.setores = setores)
+        .then(setores => {
+          this.setores = setores;
+          this.pegarQtdFuncionariosPorSetor();
+        });
     }else{
-      this.$http.get('http://localhost:5000/api/funcionario')
+      this.$http.get('http://localhost:5000/api/setor')
       .then(res => res.json())
-      .then(funcionarios => {
-        this.funcionarios = funcionarios;
-        this.carregarSetores();
+      .then(setores => {
+        this.setores = setores;
+        this.pegarQtdFuncionariosPorSetor();
       })
     }
   },
@@ -74,16 +77,14 @@ export default {
     addSetor(){
       let _setor={
         nome: this.nome,
-        empresa:{
-          id: this.empresa.id,
-          nome: this.empresa.nome
-        }
+        empresaId: this.empresa.id,
       }
     
       if (_setor.nome){
-        this.$http.post('http://localhost:5000/api/setores', _setor)
+        this.$http.post('http://localhost:5000/api/setor', _setor)
         .then(res => res.json())
         .then(setorRetornado => {
+          setorRetornado.qtdFunc = !setorRetornado.funcionarios ? 0 : setorRetornado.funcionarios.length;
           this.setores.push(setorRetornado);
           this.nome= '';
         })
@@ -94,19 +95,15 @@ export default {
     pegarQtdFuncionariosPorSetor(){
       this.setores.forEach((setor,index)=>{
         setor = {
-          id: setor.id,
-          nome: setor.nome,
-          qtdFunc: this.funcionarios.filter(funcionario =>
-           funcionario.setor.id == setor.id
-          ).length,
-          empresa: setor.empresa.nome
+          ...setor,
+          qtdFunc: !setor.funcionarios ? 0 : setor.funcionarios.length,
         }
         this.setores[index] = setor
       });
     },
     carregarEmpresas(){
         this.$http
-       .get('http://localhost:5000/api/empresas/' + this.empresaid)
+       .get('http://localhost:5000/api/empresa/' + this.empresaid)
        .then(res => res.json())
        .then(empresa => {
           this.empresa = empresa

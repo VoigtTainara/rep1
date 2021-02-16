@@ -51,7 +51,7 @@ export default {
   created(){
     if (this.setorid){
       this.carregarSetores();
-      this.$http.get('http://localhost:5000/api/funcionario/BySetor/${this.setorid}')
+      this.$http.get(`http://localhost:5000/api/funcionario/BySetor/${this.setorid}`)
         .then(res => res.json())
         .then(funcionarios => this.funcionarios = funcionarios)
     }else{
@@ -71,9 +71,9 @@ export default {
       let _funcionario={
         nome: this.nome,
         sobrenome: "",
-        setorid: this.setor.id    
+        setorId: this.setorid    
       }
-    
+    console.dir(_funcionario);
       if (_funcionario.nome){
         this.$http.post('http://localhost:5000/api/funcionario', _funcionario)
         .then(res => res.json())
@@ -93,6 +93,7 @@ export default {
       }) 
     },
     carregarSetores(){
+    console.dir('++ ' + this.setorid);
     this.$http
        .get('http://localhost:5000/api/setor/' + this.setorid)
        .then(res => res.json())
