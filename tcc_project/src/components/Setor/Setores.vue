@@ -26,7 +26,8 @@
             tag="button" class="btn btnPrimary"
             style="cursor: pointer"
             >Ver/Criar funcionário</router-link>
-            <button class="btn btnDanger" @click="remover(setor)">Remover</button>
+            <button v-if="empresaid == undefined" class="btn btnDanger" @click="remover(setor)">Remover</button>
+            <button v-else class="btn btnDanger1" @click="remover(setor)">Remover</button>
           </td> 
         </tr>
       </tbody>
@@ -123,7 +124,7 @@ export default {
             this.$alert("Existem funcionários cadastrados no setor! Realize a exclusão dos funcionários, ou "+
             "os altere de setor.")
           }else if(setor.qtdFunc<=0) {
-            this.$http.delete(`http://localhost:5000/api/setores/${setor.id}`)
+            this.$http.delete(`http://localhost:5000/api/setor/${setor.id}`)
             let indice = this.setores.indexOf(setor);
             this.setores.splice(indice, 1);
           }

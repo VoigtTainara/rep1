@@ -205,14 +205,17 @@ import Titulo from '../Titulo/Titulo'
 .btnEditar{
     float: right;
     background-color: rgb(76,186,249);
+    padding: 10px 20px;
 }
 .btnSalvar{
     float: right;
     background-color: rgb(79,196,68);
+    padding: 10px 20px;
 }
 .btnCancelar{
     float: left;
     background-color: rgb(249,186,92);
+    padding: 10px 20px;
 }
 .colPequeno{
     width: 20%;

@@ -38,16 +38,25 @@ body, html{
 }
 .btnDanger{
   background-color: #fa4430;
+  padding: 10px 59px;
+}
+.btnDanger1{
+  background-color: #fa4430;
+  padding: 10px 90px;
 }
 .btnPrimary{
   background-color:#00BFFF;
+  padding: 10px 32px;
 }
 .btnSuccess{
   background-color:#00FF7F;
+  padding: 10px 74px;
+}
+.btnVoltar{
+  padding: 10px 20px;
 }
 .btn{
   border: 1px solid #000;
-  padding: 10px 20px;
   cursor: pointer;
   font-size: 1.0em;
   color: white;
